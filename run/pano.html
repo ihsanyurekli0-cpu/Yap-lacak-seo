@@ -1,0 +1,158 @@
+<title>SEO Denetim Hattı — Canlı Pano</title>
+<style>
+  :root{
+    --bg:#F6F7F5; --surface:#FFFFFF; --ink:#1B211E; --muted:#5C665F;
+    --line:#E1E6E2; --accent:#1E6B54; --accent-ink:#FFFFFF;
+    --done:#2E8B57; --done-bg:#E7F3EC; --run:#B77E22; --run-bg:#FBF3E4;
+    --wait:#9AA5A0; --wait-bg:#F0F2F0; --spine:#CBD4CE;
+    --mono:ui-monospace,'SF Mono','Cascadia Code',Menlo,Consolas,monospace;
+    --sans:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){:root{
+    --bg:#0F1412; --surface:#171D1A; --ink:#E6EBE8; --muted:#8FA098;
+    --line:#26302B; --accent:#58C39A; --accent-ink:#0F1412;
+    --done:#4FBF8B; --done-bg:#15291F; --run:#E0A44A; --run-bg:#2B2214;
+    --wait:#5C665F; --wait-bg:#1B211E; --spine:#33403A;
+  }}
+  :root[data-theme="dark"]{
+    --bg:#0F1412; --surface:#171D1A; --ink:#E6EBE8; --muted:#8FA098;
+    --line:#26302B; --accent:#58C39A; --accent-ink:#0F1412;
+    --done:#4FBF8B; --done-bg:#15291F; --run:#E0A44A; --run-bg:#2B2214;
+    --wait:#5C665F; --wait-bg:#1B211E; --spine:#33403A;
+  }
+  :root[data-theme="light"]{
+    --bg:#F6F7F5; --surface:#FFFFFF; --ink:#1B211E; --muted:#5C665F;
+    --line:#E1E6E2; --accent:#1E6B54; --accent-ink:#FFFFFF;
+    --done:#2E8B57; --done-bg:#E7F3EC; --run:#B77E22; --run-bg:#FBF3E4;
+    --wait:#9AA5A0; --wait-bg:#F0F2F0; --spine:#CBD4CE;
+  }
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);margin:0;padding:28px 20px 48px;line-height:1.45}
+  .wrap{max-width:880px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin:0}
+  h1{font-size:24px;margin:4px 0 0;text-wrap:balance}
+  .sub{color:var(--muted);font-size:13.5px;margin:2px 0 0}
+  .sub code{font-family:var(--mono);font-size:12px}
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+  .tile{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+  .tile .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .tile .v{font-family:var(--mono);font-size:26px;font-variant-numeric:tabular-nums;margin-top:2px}
+  .tile .v small{font-size:13px;color:var(--muted)}
+  .pipe{display:flex;flex-direction:column;gap:0}
+  .phase{display:grid;grid-template-columns:34px 1fr;gap:14px}
+  .rail{display:flex;flex-direction:column;align-items:center}
+  .node{width:16px;height:16px;border-radius:50%;border:3px solid var(--wait);background:var(--surface);flex:none;margin-top:14px}
+  .node.done{border-color:var(--done);background:var(--done)}
+  .node.run{border-color:var(--run);background:var(--run-bg);animation:pulse 1.6s ease-in-out infinite}
+  @keyframes pulse{50%{box-shadow:0 0 0 6px color-mix(in srgb,var(--run) 22%,transparent)}}
+  @media (prefers-reduced-motion: reduce){.node.run{animation:none}}
+  .stem{width:3px;flex:1;background:var(--spine);min-height:18px}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:18px}
+  .card.run{border-color:color-mix(in srgb,var(--run) 45%,var(--line))}
+  .phead{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .phead h2{font-size:15.5px;margin:0}
+  .badge{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:2px 9px;border-radius:99px}
+  .badge.done{background:var(--done-bg);color:var(--done)}
+  .badge.run{background:var(--run-bg);color:var(--run)}
+  .badge.wait{background:var(--wait-bg);color:var(--wait)}
+  .pdesc{color:var(--muted);font-size:12.5px;margin:4px 0 0}
+  .matrix-scroll{overflow-x:auto;margin-top:12px}
+  table{border-collapse:collapse;width:100%;min-width:560px}
+  th,td{text-align:left;padding:5px 6px;font-size:12px}
+  thead th{font-family:var(--mono);font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line);font-weight:500}
+  tbody th{font-weight:600;font-size:12.5px;white-space:nowrap;padding-right:14px}
+  .chip{font-family:var(--mono);font-size:11px;display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:7px;white-space:nowrap}
+  .chip::before{content:"";width:7px;height:7px;border-radius:50%;flex:none}
+  .chip.done{background:var(--done-bg);color:var(--done)}.chip.done::before{background:var(--done)}
+  .chip.run{background:var(--run-bg);color:var(--run)}.chip.run::before{background:var(--run);animation:pulse 1.6s infinite}
+  .chip.wait{background:var(--wait-bg);color:var(--wait)}.chip.wait::before{background:var(--wait)}
+  .log{font-family:var(--mono);font-size:12px;display:flex;flex-direction:column;gap:6px;margin-top:10px}
+  .log div{display:flex;gap:10px}
+  .log .t{color:var(--muted);flex:none;font-variant-numeric:tabular-nums}
+  .note{border-left:3px solid var(--accent);padding:8px 12px;font-size:12.5px;color:var(--muted);background:var(--surface);border-radius:0 8px 8px 0}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);font-family:var(--mono)}
+</style>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">seo-audit-4-projects · wf_ab12bff1</p>
+    <h1>SEO Denetim Hattı — Canlı Pano</h1>
+    <p class="sub">4 proje × 5 boyut, adversarial doğrulamalı. Son güncelleme: <code>2026-07-04 22:33 UTC</code></p>
+  </header>
+
+  <div class="tiles" id="tiles"></div>
+
+  <div class="pipe" id="pipe"></div>
+
+  <div class="card">
+    <p class="eyebrow" style="margin-bottom:8px">Olay günlüğü</p>
+    <div class="log" id="log"></div>
+  </div>
+
+  <p class="note">Bu pano anlık görüntüdür — dış bağlantı kuramaz; her faz geçişinde <strong>aynı adrese yeniden yayınlıyorum</strong>. Sayfayı yenilemen yeterli.</p>
+  <div class="legend"><span>● yeşil = bitti</span><span>● amber = çalışıyor</span><span>● gri = sırada</span></div>
+</div>
+<script>
+const STATE = {
+  updated: "22:33 UTC",
+  phase: 1,
+  projects: ["Ankaradj","Hangises","Nextrez","Burcuevent"],
+  dims: ["indexation","on-page","structured-data","perf-security","local-intl"],
+  // matrix[proje][boyut] = {s:'done'|'run'|'wait', f:bulguSayısı}
+  matrix: {
+    "Ankaradj":   {"indexation":{s:"done",f:2},"on-page":{s:"done",f:6},"structured-data":{s:"done",f:5},"perf-security":{s:"done",f:5},"local-intl":{s:"done",f:5}},
+    "Hangises":   {"indexation":{s:"done",f:3},"on-page":{s:"run"},"structured-data":{s:"run"},"perf-security":{s:"wait"},"local-intl":{s:"wait"}},
+    "Nextrez":    {"indexation":{s:"wait"},"on-page":{s:"wait"},"structured-data":{s:"wait"},"perf-security":{s:"wait"},"local-intl":{s:"wait"}},
+    "Burcuevent": {"indexation":{s:"wait"},"on-page":{s:"wait"},"structured-data":{s:"wait"},"perf-security":{s:"wait"},"local-intl":{s:"wait"}}
+  },
+  phases: [
+    {n:"1 · Audit", d:"20 denetçi — canlı curl + (Ankaradj/Hangises) kod okuma", s:"run"},
+    {n:"2 · Verify", d:"Her bulguya 1 çürütücü agent — canlıda tekrar kontrol, false-positive eler", s:"wait"},
+    {n:"3 · Synthesize", d:"4 yazar — proje başına güncel backlog markdown", s:"wait"},
+    {n:"4 · Consolidate", d:"BACKLOG.md + README yeniden üretimi → Yap-lacak-seo reposuna push", s:"wait"}
+  ],
+  log: [
+    ["22:07","Workflow başladı — 20 denetçi kuyruğa alındı"],
+    ["22:12","ankaradj:indexation ✓ 2 bulgu"],
+    ["22:18","ankaradj:on-page ✓ 6 bulgu"],
+    ["22:20","Paralelde: TAVSIYELER.md yazıldı ve Yap-lacak-seo'ya push edildi"],
+    ["22:2x","ankaradj: structured-data ✓5 · perf-security ✓5 · local-intl ✓5 → Ankaradj TAMAM (23 ham bulgu)"],
+    ["22:31","hangises:indexation ✓ 3 bulgu"],
+    ["22:33","hangises: on-page ▸ + structured-data ▸ çalışıyor · toplam 26 ham bulgu"]
+  ]
+};
+
+const cells = Object.values(STATE.matrix).flatMap(r=>Object.values(r));
+const done = cells.filter(c=>c.s==="done").length;
+const run  = cells.filter(c=>c.s==="run").length;
+const found= cells.reduce((a,c)=>a+(c.f||0),0);
+
+document.getElementById("tiles").innerHTML = [
+  ["Denetçi","<span>"+done+"</span><small> / "+cells.length+" bitti</small>"],
+  ["Şu an çalışan", run],
+  ["Ham bulgu", found],
+  ["Aktif faz","<small style='font-size:15px'>"+STATE.phases[STATE.phase-1].n+"</small>"]
+].map(([k,v])=>`<div class="tile"><div class="k">${k}</div><div class="v">${v}</div></div>`).join("");
+
+const stCls = s=>s==="done"?"done":s==="run"?"run":"wait";
+const stTxt = s=>s==="done"?"bitti":s==="run"?"çalışıyor":"sırada";
+
+const matrixHTML = `<div class="matrix-scroll"><table>
+<thead><tr><th></th>${STATE.dims.map(d=>`<th>${d}</th>`).join("")}</tr></thead>
+<tbody>${STATE.projects.map(p=>`<tr><th>${p}</th>${STATE.dims.map(d=>{
+  const c=STATE.matrix[p][d];
+  const label=c.s==="done"?("✓ "+(c.f??0)+" bulgu"):stTxt(c.s);
+  return `<td><span class="chip ${stCls(c.s)}">${label}</span></td>`;
+}).join("")}</tr>`).join("")}</tbody></table></div>`;
+
+document.getElementById("pipe").innerHTML = STATE.phases.map((ph,i)=>`
+  <div class="phase">
+    <div class="rail"><div class="node ${stCls(ph.s)}"></div>${i<STATE.phases.length-1?'<div class="stem"></div>':''}</div>
+    <div class="card ${ph.s==="run"?"run":""}">
+      <div class="phead"><h2>${ph.n}</h2><span class="badge ${stCls(ph.s)}">${stTxt(ph.s)}</span></div>
+      <p class="pdesc">${ph.d}</p>
+      ${i===0?matrixHTML:""}
+    </div>
+  </div>`).join("");
+
+document.getElementById("log").innerHTML =
+  STATE.log.map(([t,m])=>`<div><span class="t">${t}</span><span>${m}</span></div>`).join("");
+</script>
