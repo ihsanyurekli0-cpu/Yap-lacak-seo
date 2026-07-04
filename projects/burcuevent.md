@@ -1,7 +1,8 @@
 # BK Organizasyon — burcuevent.tr
 
 Marka: Burcuevent / BK Organizasyon® — Ankara organizasyon şirketi (düğün, kına, DJ, ses-ışık)
-Altyapı: Statik site / Caddy · Repo: **harici** (bu oturumda yok)
+Altyapı: Statik site (HTML) / Caddy
+Repo: **`ihsanyurekli0-cpu/burcuevent`** — GitHub'da **PRIVATE**, uzak yedekli (default branch: `master`; ilk yedek 2026-07-04). Kod düzeltmeleri için `add_repo` ile oturuma eklenebilir.
 Genel durum: 🟡 **Sağlam küçük kurumsal site**, alias & şema boşlukları.
 
 ## Canlı doğrulama (2026-07-04)
@@ -40,4 +41,6 @@ Genel durum: 🟡 **Sağlam küçük kurumsal site**, alias & şema boşlukları
 - Sadece `Allow: /` + `Sitemap`. Admin/özel yol yoksa sorun yok; varsa `Disallow` ekle.
 - **Durum:** [ ]
 
-> Not: Bu maddeler canlı HTML denetiminden. Uygulamak için Burcuevent repo/sunucu erişimi gerekli.
+> Not: Bu maddeler canlı HTML denetiminden. Repo artık GitHub'da (private, yedekli) →
+> maddeler kodda uygulanabilir; oturuma `add_repo ihsanyurekli0-cpu/burcuevent` ile çekilir.
+> `bkorganizasyon.com.tr` 301 (P1-B1) sunucu/DNS tarafı olduğundan repo dışı kalabilir.

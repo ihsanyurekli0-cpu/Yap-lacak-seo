@@ -10,7 +10,7 @@ Tam kapsamlı, çok-projeli SEO aksiyon takip deposu. Kaynak: canlı HTTP deneti
 | Ankaradj | ankaradjparty.com | Next.js + Cloudflare | ankaradjparty-frontend-v2 | [projects/ankaradj.md](projects/ankaradj.md) |
 | Hangises | hangises.com | Next.js + Cloudflare | ankaradjparty-frontend-v2 (aynı codebase) | [projects/hangises.md](projects/hangises.md) |
 | Nextrez | nextrez.com.tr | Next.js + Cloudflare | (harici) | [projects/nextrez.md](projects/nextrez.md) |
-| BK Organizasyon | burcuevent.tr | Statik / Caddy | (harici) | [projects/burcuevent.md](projects/burcuevent.md) |
+| BK Organizasyon | burcuevent.tr | Statik / Caddy | `ihsanyurekli0-cpu/burcuevent` (PRIVATE, yedekli) | [projects/burcuevent.md](projects/burcuevent.md) |
 
 > Domain notu: `nextrez.com` satılık park (bizim değil) → gerçek **nextrez.com.tr**.
 > `bkorganizasyon.com.tr` alias → asıl site **burcuevent.tr** (marka: Burcuevent / BK Organizasyon®).
