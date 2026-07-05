@@ -15,7 +15,7 @@ FAZ 1 · DENETİM (bu oturum)
         │ fire_trigger
         ▼
 FAZ 2 · UYGULAMA (otomatik yeni oturum)
-  Tetik: trig_01MiZXgduAbsWyXP5RZesgNx (poke-only, yeni-oturum modu, push bildirimi açık)
+  Tetik: trig_01WGgXUhY3tULigsD7hSJsKv (v2, poke-only, yeni-oturum modu, push bildirimi açık)
   P1 kod düzeltmeleri → claude/seo-p1-fixes dalı → DRAFT PR → backlog [x] işaretleme
 ```
 
@@ -33,10 +33,17 @@ FAZ 2 · UYGULAMA (otomatik yeni oturum)
 
 ## Tetik yedeği (silinse bile yeniden kurulabilir)
 
-- ID: `trig_01MiZXgduAbsWyXP5RZesgNx` · mod: `create_new_session_on_fire=true` · bildirim: push
-- Prompt özeti: Yap-lacak-seo'yu ekle-oku (BACKLOG + TAVSIYELER A1..A9) → ankaradjparty-frontend-v2'de
-  A1 aggregateRating, A2 sitemap pagination, A3 OG swap, A4 brand logo, A5 desc 155ch →
-  dal `claude/seo-p1-fixes`, DRAFT PR, backlog kutularını [x] + PR linki, `run/OTURUM-KAYDI.md`
+- ID: `trig_01WGgXUhY3tULigsD7hSJsKv` (v2 — denetim SONRASI gerçek önceliklerle yeniden kuruldu;
+  eski `trig_01MiZXgduAbsWyXP5RZesgNx` A1-A5 varsayımına dayanıyordu, artık GEÇERSİZ/silindi)
+- mod: `create_new_session_on_fire=true` · bildirim: push
+- Prompt özeti: Yap-lacak-seo'yu ekle-oku (BACKLOG.md + projects/ankaradj.md + projects/hangises.md)
+  → ankaradjparty-frontend-v2'de doğrulanmış 3 P1'i uygula: (1) Ankaradj Organization/publisher logosu
+  `layout.jsx:225` (+blog publisher.logo) `brand.logoUrl`'a çevir, (2) Hangises `/equipment` H1 +
+  `equipment-schema.js` marka-koşullu yap (ulusal markada "Ankara" hardcode kaldır), (3) Hangises
+  DJ liste şeması (`djs/layout.jsx:137-152`) profil sayfalarına sızıyor → `djs/page.jsx`'e taşı.
+  Vakit kalırsa P2 hızlı kazanımlar: aggregateRating (P2-11 ankaradj/hangises benzeri), sitemap
+  DJ pagination, markalı OG swap, `layout.jsx:363-366` preconnect `!isAnkaradj` ters koşulu.
+  Dal `claude/seo-p1-fixes`, DRAFT PR, backlog kutularını [x] + PR linki, `run/OTURUM-KAYDI.md`
   Faz-2 kutularını [x], kısa özet raporu.
 
 ## ✅ Bitiş kontrol listesi
@@ -44,19 +51,19 @@ FAZ 2 · UYGULAMA (otomatik yeni oturum)
 ### Faz 1 — Denetim (ana oturum kapatır)
 - [x] Workflow başlatıldı (wf_ab12bff1-eb4)
 - [x] TAVSIYELER.md yazıldı + push
-- [x] Tetik kuruldu (Faz 2 otomasyonu)
+- [x] Tetik kuruldu (Faz 2 otomasyonu) — v1, sonra v2 ile düzeltildi
 - [x] Export: script + pano + oturum kaydı repoya push
-- [ ] Workflow tamamlandı (20 audit + verify + synth + consolidate)
-- [ ] Güncel backlog'lar (projects/*.md + BACKLOG.md + README.md) bu repoya push edildi
-- [ ] Pano final durumuna güncellendi (`run/pano.html` + Artifact)
-- [ ] Tetik ateşlendi → Faz 2 oturumu başladı
+- [x] Workflow tamamlandı (20 audit + 79 verify + 4 synth + consolidate; 104 agent, 0 hata)
+- [x] Güncel backlog'lar (projects/*.md + BACKLOG.md + README.md) bu repoya push edildi
+      → 4 proje, 75 doğrulanmış madde (P0=0, P1=3, P2=72)
+- [x] Pano final durumuna güncellendi (`run/pano.html` + Artifact)
+- [x] Tetik DÜZELTİLDİ (v2 — gerçek doğrulanmış P1'lerle) ve ateşlendi → Faz 2 oturumu başladı
 
 ### Faz 2 — Uygulama (tetiklenen oturum kapatır)
-- [ ] A1 aggregateRating uygulandı (djs/[slugOrId]/layout.jsx)
-- [ ] A2 sitemap pagination uygulandı (sitemap.xml/route.js)
-- [ ] A3 markalı OG swap uygulandı (servicePageMetadata.js)
-- [ ] A4 brand-aware logo uygulandı (layout.jsx)
-- [ ] A5 description ~155ch (config.js) — vakit kalırsa
+- [ ] P1-1: Ankaradj logo düzeltmesi (`layout.jsx:225` + blog publisher.logo) → brand.logoUrl
+- [ ] P1-2: Hangises `/equipment` H1 + `equipment-schema.js` marka-koşullu (Ankara hardcode kaldır)
+- [ ] P1-3: Hangises DJ liste şeması `djs/layout.jsx` → `djs/page.jsx`'e taşı (profil sızıntısı fix)
+- [ ] (vakit kalırsa) P2 hızlı kazanımlar: aggregateRating, sitemap pagination, OG swap, preconnect ters-koşul
 - [ ] DRAFT PR açıldı (claude/seo-p1-fixes → main): PR linki buraya: ______
 - [ ] Backlog maddeleri [x] işaretlendi + PR linkleri eklendi
 - [ ] Bu listenin Faz-2 kutuları [x] yapılıp push edildi
