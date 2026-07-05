@@ -59,19 +59,26 @@ FAZ 2 · UYGULAMA (otomatik yeni oturum)
 - [x] Pano final durumuna güncellendi (`run/pano.html` + Artifact)
 - [x] Tetik DÜZELTİLDİ (v2 — gerçek doğrulanmış P1'lerle) ve ateşlendi → Faz 2 oturumu başladı
 
-### Faz 2 — Uygulama (tetiklenen oturum kapatır)
-- [ ] P1-1: Ankaradj logo düzeltmesi (`layout.jsx:225` + blog publisher.logo) → brand.logoUrl
-- [ ] P1-2: Hangises `/equipment` H1 + `equipment-schema.js` marka-koşullu (Ankara hardcode kaldır)
-- [ ] P1-3: Hangises DJ liste şeması `djs/layout.jsx` → `djs/page.jsx`'e taşı (profil sızıntısı fix)
-- [ ] (vakit kalırsa) P2 hızlı kazanımlar: aggregateRating, sitemap pagination, OG swap, preconnect ters-koşul
-- [ ] DRAFT PR açıldı (claude/seo-p1-fixes → main): PR linki buraya: ______
-- [ ] Backlog maddeleri [x] işaretlendi + PR linkleri eklendi
-- [ ] Bu listenin Faz-2 kutuları [x] yapılıp push edildi
+### Faz 2 — Uygulama
+> Not: Tetiklenen oturum (`cse_019eYaw1to7ZDwHiWbPAoYHk`) ilerleme kaydetmedi (`claude/seo-p1-fixes`
+> dalı hiç oluşmamıştı). Kullanıcı "yapılacakları bitir" dediğinde, PR #1'i izleyen ANA oturum
+> (aynı ankaradjparty-frontend-v2 checkout'u zaten elindeydi) devraldı ve düzeltmeleri doğrudan
+> uyguladı. Otomatik zincir bu noktada insan müdahalesiyle tamamlandı — kayıt altında.
+- [x] P1-1: Ankaradj logo düzeltmesi (`layout.jsx:225` + blog `publisher.logo`) → `brand.logoUrl`
+- [x] P1-2: Hangises `/equipment` H1 + `equipment-schema.js` marka-koşullu (Ankara hardcode kaldırıldı)
+- [x] P1-3: Hangises DJ liste şeması `djs/layout.jsx` → `djs/page.jsx`'e taşındı (`DjsPageClient.jsx` ayrıştırıldı)
+- [x] P2 hızlı kazanımlar: aggregateRating (koşullu), sitemap pagination (`fetchAllDjs`), Ankaradj OG swap (whitelist), preconnect ters-koşul düzeltmesi
+- [x] DRAFT PR açıldı (`claude/seo-p1-fixes` → `main`): **https://github.com/ihsanyurekli0-cpu/ankaradjparty-frontend-v2/pull/2**
+- [x] Backlog maddeleri [x] işaretlendi + PR linkleri eklendi (BACKLOG.md 10 satır, projects/ankaradj.md 7 madde, projects/hangises.md 3 madde)
+- [x] Bu listenin Faz-2 kutuları [x] yapılıp push edildi
+
+Doğrulama: her commit sonrası `pnpm lint` + `pnpm build` yeşil (6 commit, hepsi ayrı).
 
 ### Kapanış (insan kararı — İhsan)
-- [ ] PR #1 (denetim raporu) gözden geçir → merge/kapat
-- [ ] P1-fixes PR'ı gözden geçir → merge
+- [ ] PR #1 (denetim raporu, `claude/seo-audit-project-i86w3h`) gözden geçir → merge/kapat
+- [ ] PR #2 (P1+P2 düzeltmeleri, `claude/seo-p1-fixes`) gözden geçir → merge
 - [ ] Nextrez + Burcuevent düzeltmeleri için ayrı oturum planla (kodları bu ortamda değildi)
+- [ ] Kalan 62 açık P2 maddesi (BACKLOG.md) için bir sonraki sprint'i planla
 
 > Yarım kalırsa kurtarma: workflow ölürse `Workflow({scriptPath: run/seo_audit_wf.js, resumeFromRunId: "wf_ab12bff1-eb4"})`
 > ile kaldığı yerden devam eder (biten agent'lar cache'ten döner). Tetik kaybolursa yukarıdaki

@@ -19,14 +19,14 @@ Stack: Next.js 16 + Cloudflare. Repo `ankaradjparty-frontend-v2` (çift marka; b
 - **Düzeltme:** H1 ve `equipmentSchema`'yı `layout.jsx` gibi marka-koşullu yap: `brand.city` varsa (ankaradjparty) "Ankara'da" kalsın; hangises (ulusal) için "Ankara'da" ibaresini KALDIR — H1 örn. "DJ & Canlı Müzik Ekipman Kiralama", şema name/description "Türkiye geneli". Ulusal markaya uydurma şehir metni ekleme.
 - **Kabul kriteri:** `hangises.com/equipment` H1 ve JSON-LD Service name/description'ında "Ankara" geçmez; title/meta/H1/şema aynı ulusal hedeflemede tutarlı. `ankaradjparty.com/equipment` "Ankara" formunu korur.
 - **Doğrulama:** `curl -s -L https://hangises.com/equipment | grep -o "Ankara'da"` (boş dönmeli)
-- **Durum:** [ ]
+- **Durum:** [x] — https://github.com/ihsanyurekli0-cpu/ankaradjparty-frontend-v2/pull/2
 
 ## P1-2 · DJ liste (CollectionPage) @graph'ı bireysel DJ profil sayfalarına sızıyor — 2 BreadcrumbList + 2 FAQPage + yanlış sayfa tipi
 - **Kanıt:** Canlı `https://hangises.com/djs/68e9534d1d13ec636ca41d1c` (200) → 8 JSON-LD bloğu. Biri liste @graph'ı: `CollectionPage (@id .../djs#collection, url=/djs)` + `ItemList(8 DJ)` + `FAQPage(5 soru)` + `BreadcrumbList`. Profilin kendi breadcrumb/faq/profile/service blokları da mevcut → sayımlar: `BreadcrumbList=2`, `FAQPage=2` (10 Question), `CollectionPage=1` (sayfa aslında ProfilePage). Kök neden: `src/app/djs/layout.jsx:137-152` `buildDjsSchema(brand)` çıktısını `{children}`'ı saran `<script>` olarak basıyor; Next.js layout nested child route'ları (`[slugOrId]`) sardığı için liste şeması her profil sayfasında render ediliyor.
 - **Düzeltme:** `<script>`'i `src/app/djs/layout.jsx`'ten çıkar, `src/app/djs/page.jsx` içine taşı (page yalnız `/djs` route'unda çalışır, `[slugOrId]` child'ına inmez). Profil sayfasında yalnız `[slugOrId]/layout.jsx`'in tek ProfilePage + Service + tek BreadcrumbList + tek FAQPage'i kalır.
 - **Kabul kriteri:** `/djs/{id}` SSR'sinde tam 1 BreadcrumbList, 1 FAQPage, 0 CollectionPage; `/djs` listesinde CollectionPage/ItemList/FAQPage/BreadcrumbList korunur. Rich Results Test her iki URL'de uyarısız.
 - **Doğrulama:** `curl -s https://hangises.com/djs/68e9534d1d13ec636ca41d1c | grep -c CollectionPage` (0 beklenir) — `grep -c '"@type":"BreadcrumbList"'` (1) — `grep -c '"@type":"FAQPage"'` (1); `curl -s https://hangises.com/djs | grep -c CollectionPage` (1)
-- **Durum:** [ ]
+- **Durum:** [x] — https://github.com/ihsanyurekli0-cpu/ankaradjparty-frontend-v2/pull/2
 
 ---
 
@@ -35,7 +35,7 @@ Stack: Next.js 16 + Cloudflare. Repo `ankaradjparty-frontend-v2` (çift marka; b
 - **Düzeltme:** Üretimi sayfalayın: yanıttaki `pages`/`total` meta'sıyla `limit=50` + `page` döngüsünde tüm sayfaları çekin, tüm non-demo (`isDemo=false`) DJ'leri ekleyin. `page` paramı API'de çalışıyor.
 - **Kabul kriteri:** Katalogdaki tüm non-demo DJ profilleri sitemap'te; 50'den fazla DJ olsa bile hiçbiri düşmez.
 - **Doğrulama:** DJ sayısını 50 üstüne çıkardıktan sonra `curl -s https://hangises.com/sitemap.xml | grep -c '/djs/'` değeri API total ile eşleşmeli. Kod: `grep -n 'limit=50' src/app/sitemap.xml/route.js`
-- **Durum:** [ ]
+- **Durum:** [x] — https://github.com/ihsanyurekli0-cpu/ankaradjparty-frontend-v2/pull/2
 
 ## P2-2 · Statik sayfaların lastmod'u dosya mtime'ı = her deploy'da hepsi 'şimdi'ye sıfırlanıyor (yanıltıcı tazelik sinyali)
 - **Kanıt:** `src/app/sitemap.xml/route.js:54` → `return statSync(filePath).mtime`. CI checkout'ta tüm dosyalar aynı anda yazıldığından 24 statik URL'nin HEPSİ aynı damgayı taşıyor: canlı `curl ... | grep -oE '<lastmod>[^<]+' | sort | uniq -c` → 24× `2026-07-04T07:59:07.000Z` (blog 3× 06-17, DJ gerçek `itemDate()` ile doğru). `/privacy`, `/terms` gibi değişmeyen sayfalar her deploy'da lastmod'u "şimdi"ye zıplatıyor → Google lastmod'a güvenmeyi bırakabilir.

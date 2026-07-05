@@ -17,7 +17,7 @@ Stack: Next.js 16 + Cloudflare (edge: Caddy). Repo: `ankaradjparty-frontend-v2` 
 - **Düzeltme:** `layout.jsx:225` `logo` = `${siteUrl}${brand.logoUrl}` yap (ankaradj için `/brand/ankaradjparty/logo.png`). `/logo.png` (hangises) ankaradj şemasında hiçbir yerde referanslanmasın. Aynı düzeltme blog `publisher.logo` için de geçerli.
 - **Kabul kriteri:** Rich Results Test Organization.logo Ankara DJ Party markını render eder; ankaradj JSON-LD'de `logo` değeri `/brand/ankaradjparty/` altını gösterir, `/logo.png` geçmez.
 - **Doğrulama:** `curl -s https://ankaradjparty.com/ | grep -o '"logo":"[^"]*"'`
-- **Durum:** [ ]
+- **Durum:** [x] — https://github.com/ihsanyurekli0-cpu/ankaradjparty-frontend-v2/pull/2
 
 ---
 
@@ -33,7 +33,7 @@ Stack: Next.js 16 + Cloudflare (edge: Caddy). Repo: `ankaradjparty-frontend-v2` 
 - **Düzeltme:** API çağrısını sayfalı (pagination) yap ya da limit'i kaldır/yükselt; ideal olarak şehir filtresini fetch limit'inden ÖNCE server-side uygula (backend brand-aware `?city=Ankara`, `config.js:91`'deki 'M3 brand-aware filter' TODO'su). NOT: mevcut `?city=Ankara` API'si `total=2` dönüyor (limit=50'deki 5 ile tutarsız) ve `?limit=200` reddediliyor → naif uygulama bugün kapsamayı düşürür; önce backend reconcile.
 - **Kabul kriteri:** Yayınlanmış (isDemo olmayan) Ankara DJ sayısı arttıkça sitemap'teki `/djs/` `loc` sayısı = yayınlanmış Ankara DJ sayısı; national havuz 50+ olsa bile Ankara profili düşmez.
 - **Doğrulama:** `curl -s https://ankaradjparty.com/sitemap.xml | grep -c '<loc>[^<]*/djs/'` (yayınlanmış Ankara DJ sayısıyla karşılaştır)
-- **Durum:** [ ]
+- **Durum:** [x] — https://github.com/ihsanyurekli0-cpu/ankaradjparty-frontend-v2/pull/2
 
 ## P2-3 · DJ profil meta description'ları anahtar-kelimesiz/şablon (ham gündelik bio ya da jenerik kalıp)
 - **Kanıt:** `pickBio` (`src/app/djs/[slugOrId]/layout.jsx:39-45`) yalnız bio<60 karakterse fallback şablonu üretir; 60+ karakterli gündelik biolar aynen description olur (`layout.jsx:100` `description=bio.slice(0,160)`). Canlı `/djs/68e9534d1d13ec636ca41d1c` DESC(74): 'Ben C0D3R!, Asıl işim yazılım ama hobi olarak DJ'lik yapmaya karar verdim.' — 'Ankara'/'DJ kiralama'/hizmet/lokasyon anahtarı YOK; 'yazılım'/'hobi' arama niyetine ters. Kısa biolu DJ'lerde fallback yalnız isim değişen jenerik metin → çoklu DJ'de near-duplicate. (Not: title, sr-only H1 ve JSON-LD zaten 'Ankara DJ Kiralama' taşıyor — eksik olan yalnız meta description.)
@@ -82,7 +82,7 @@ Stack: Next.js 16 + Cloudflare (edge: Caddy). Repo: `ankaradjparty-frontend-v2` 
 - **Düzeltme:** `buildDjsSchema` çıktısını `djs/layout.jsx`'ten `djs/page.jsx`'e (yalnız index) taşı; böylece `/djs/[slugOrId]` sadece ProfilePage/Service/BreadcrumbList/FAQPage üretir.
 - **Kabul kriteri:** DJ profil URL'inde tam olarak 1 BreadcrumbList ve 1 FAQPage; CollectionPage/ItemList yok.
 - **Doğrulama:** `curl -s https://ankaradjparty.com/djs/68e9534d1d13ec636ca41d1c | grep -o '"@type":"BreadcrumbList"' | wc -l`
-- **Durum:** [ ]
+- **Durum:** [x] — https://github.com/ihsanyurekli0-cpu/ankaradjparty-frontend-v2/pull/2
 
 ## P2-10 · Hizmet landing sayfaları #organization'ı @id ile bağlanmamış ikinci ProfessionalService varlığıyla tekrarlıyor
 - **Kanıt:** `src/components/shared/ServiceLandingPage.jsx:159-184` `serviceSchema`'yı `@type: ProfessionalService` olarak, @id OLMADAN, kendi provider Organization + address + contactPoint + priceRange ile üretiyor. Canlı `/dugun-dj-ankara`: block0 `["LocalBusiness","ProfessionalService"]` @id `#organization` VE block3 ayrı ProfessionalService 'Ankara Düğün DJ' (@id yok, kendi provider adresi/telefonu). Aynı işletmeyi tanımlayan iki iş-tipi varlık @id ile bağlanmamış.
@@ -96,7 +96,7 @@ Stack: Next.js 16 + Cloudflare (edge: Caddy). Repo: `ankaradjparty-frontend-v2` 
 - **Düzeltme:** SADECE `dj.averageRating>0` VE `dj.totalReviews>0` olduğunda (kartta zaten gösterilen aynı gerçek veri) Service şemasına `aggregateRating {"@type":"AggregateRating", ratingValue: dj.averageRating, reviewCount: dj.totalReviews}` ekle; aksi halde tamamen çıkar. Puanı ASLA hardcode/tahmin etme — sayfada görünür karşılığı olmayan uydurma puan Google structured data politikası ihlali ve manuel ceza riskidir.
 - **Kabul kriteri:** Gerçek yorumu olan DJ'lerde aggregateRating on-page yıldız değeriyle birebir eşleşir; puansız DJ'lerde hiç rating markup'ı çıkmaz.
 - **Doğrulama:** Puanlı bir DJ için: `curl -s <dj-url> | grep -o 'aggregateRating'`; ratingValue sayfadaki yıldızla aynı olmalı.
-- **Durum:** [ ]
+- **Durum:** [x] — https://github.com/ihsanyurekli0-cpu/ankaradjparty-frontend-v2/pull/2
 
 ## P2-12 · Hash'li immutable statik varlıklar yalnız `max-age=60` ile serve ediliyor (immutable cache kaybı)
 - **Kanıt:** İçerik-hash'li `/_next/static/` varlıkları (css/js/woff2) `public, max-age=60, s-maxage=1800` alıyor (canlı, `via: 1.1 Caddy`, `cf-cache-status: REVALIDATED`); 1 yıllık immutable değil. `/og/*.png`, `/favicon.ico`, `/site.webmanifest` de `max-age=60`. `next.config.mjs:77-82` immutable kuralını yalnız `/static/:path*` için tanımlıyor ama Next varlıkları `/_next/static/` altında → kural HİÇ eşleşmiyor; ayrıca Caddy edge blanket override zaten ezerdi. (Etki mütevazı: HTML TTFB etkilenmez; ETag mevcut → tekrar ziyaret ucuz 304 döner; CF edge 30dk cache'liyor. Asıl kayıp tekrar ziyaret/SPA prefetch'te 60sn'de bir koşullu round-trip.)
@@ -110,14 +110,14 @@ Stack: Next.js 16 + Cloudflare (edge: Caddy). Repo: `ankaradjparty-frontend-v2` 
 - **Düzeltme:** `createServiceMetadata`'da `brand.id==='ankaradjparty'` iken og:image'i markalı `/brand/ankaradjparty/og/*-ankara.png` setine map et. Eksik markalı görselleri (`dj-kiralama-ankara.png` vb.) üret; hepsi 1200x630 ve <150KB (TinyPNG/pngquant). NOT: aggregateRating/Review ile ilgisi yok — yalnız görsel kart.
 - **Kabul kriteri:** `curl /ankara-dj-kiralama` og:image → markalı `/brand/ankaradjparty/og/…-ankara.png` (200, 1200x630, <150KB); tüm servis landing'leri markalı OG döner.
 - **Doğrulama:** `curl -s -m12 https://ankaradjparty.com/ankara-dj-kiralama | grep -io '<meta property="og:image"[^>]*>'`
-- **Durum:** [ ]
+- **Durum:** [x] — https://github.com/ihsanyurekli0-cpu/ankaradjparty-frontend-v2/pull/2
 
 ## P2-14 · Preconnect yanlış origin'e; ekran-üstü DJ görsellerinin origin'i (api.ankaradjparty.com) preconnect'siz
 - **Kanıt:** Canlı home + DJ sayfasında tek API preconnect'i `<link rel="preconnect" href="https://api.hangises.com">` (`layout.jsx:363`, `apiOrigin` = brand.apiUrl). Ancak ekran-üstü DJ kart/hero görselleri (LCP adayı, server-rendered) `https://api.ankaradjparty.com/uploads/djs/dj-*.webp|jpg|jpeg` origin'inden geliyor; bu origin için ne preconnect ne dns-prefetch var → ilk görsel baytından önce soğuk DNS+TCP+TLS (~3 RTT) mobilde LCP'yi geciktiriyor. `layout.jsx:363-366` `api.ankaradjparty.com` preconnect'i yalnız `!isAnkaradj` altında → koşul fiilen ters. Preconnect edilen `api.hangises.com` bu sayfalarda görsel serve etmiyor.
 - **Düzeltme:** `layout.jsx` head'ine ankaradj brand'da `<link rel="preconnect" href="https://api.ankaradjparty.com" crossOrigin="anonymous" />` ekle (koşulu düzelt). Ek olarak ilk DJ hero görseline `priority`/preload düşün.
 - **Kabul kriteri:** Ankaradj sayfalarının `<head>`'inde `api.ankaradjparty.com` için `rel=preconnect` var; ilk DJ görseli için ayrı bağlantı-kurulum gecikmesi kalkar.
 - **Doğrulama:** `curl -s -m12 https://ankaradjparty.com/ | grep -io '<link[^>]*preconnect[^>]*>'; curl -s https://ankaradjparty.com/ | grep -oE 'api\.ankaradjparty\.com/uploads[^" ]*' | head -3`
-- **Durum:** [ ]
+- **Durum:** [x] — https://github.com/ihsanyurekli0-cpu/ankaradjparty-frontend-v2/pull/2
 
 ## P2-15 · Image optimizasyonu tamamen kapalı (passthrough loader) — webp/avif ve responsive resize yok
 - **Kanıt:** `src/lib/imageLoader.js:13-23` custom loader src'yi olduğu gibi döndürüyor (width/quality atılıyor); `_next/image` proxy kapalı → `curl _next/image?url=…&w=256&q=75` → HTTP 404. Gerçek DJ görseli 1080x1080 image/jpeg, 189059 bayt; `Accept: image/avif,image/webp` gönderilse bile hâlâ image/jpeg (içerik-müzakere yok, `cf-polished` header yok → Polish kapalı). `next.config.mjs:19-23` `loader:'custom'` olduğu için `formats:['image/avif','image/webp']` + deviceSizes/imageSizes ölü config. Home'da format karışık: `.webp(29798B)+.jpg(189059B)+.jpeg(236055B)`. Mobilde 150px thumbnail için 1080px/189KB iniyor.
@@ -138,7 +138,7 @@ Stack: Next.js 16 + Cloudflare (edge: Caddy). Repo: `ankaradjparty-frontend-v2` 
 - **Düzeltme:** Tüm JSON-LD node'larını tek, yüksek çözünürlüklü ankaradj logosunda birleştir. P1-1 ile birlikte `layout.jsx:225` `#organization.logo`'yu marka-bilinçli değere çek ve servis provider node'uyla aynı URL'i kullan.
 - **Kabul kriteri:** Home `#organization` schema logo == servis provider node logo; tüm JSON-LD node'larında logo URL'i aynı.
 - **Doğrulama:** `curl -s -L https://ankaradjparty.com/ | grep -o '"logo":"[^"]*"'`
-- **Durum:** [ ]
+- **Durum:** [x] — https://github.com/ihsanyurekli0-cpu/ankaradjparty-frontend-v2/pull/2
 
 ## P2-18 · Servis sayfalarında provider, #organization'a @id ile bağlanmayan ikinci işletme entity'si yaratıyor
 - **Kanıt:** Canlı `/dugun-dj-ankara` iki 'Ankara DJ Party' node'u: (1) kök `#organization` = @id'li `["LocalBusiness","ProfessionalService"]`, tam streetAddress + geo (39.977477, 32.6177454); (2) `ProfessionalService.provider` = @id'siz inline Organization (`ServiceLandingPage.jsx:137-158`), sadece addressLocality/Region/Country, streetAddress/postalCode/geo YOK. Karşılaştırma: `src/app/djs/layout.jsx:111` DOĞRU şekilde `provider: { '@id': ${SITE}/#organization }` kullanıyor. Bu bileşeni kullanan ~9 servis sayfasını etkiliyor (dj-hizmeti, dugun-dj, parti-dj, kurumsal-etkinlik-dj, etkinlik-dj, dj-setup-kiralama, ses-sistemi-kiralama, kina-dj, dj-kiralama).

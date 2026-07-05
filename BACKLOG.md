@@ -16,36 +16,36 @@ Hiçbir projede P0 (kritik/engelleyici) bulgu yok.
 
 | # | Proje | Aksiyon | Konum | Durum |
 |---|-------|---------|-------|-------|
-| 1 | Ankaradj | Sitewide Organization/publisher logosu yanlış markayı (Hangises wordmark, `/logo.png`) gösteriyor; `brand.logoUrl` kullan | src/app/layout.jsx:225 | Açık |
-| 2 | Hangises | /equipment görünür H1 + Service şeması ulusal markada 'Ankara' hardcoded (title/meta ile çelişki) | src/app/equipment/page.jsx:262; src/lib/seo/equipment-schema.js:34,36 | Açık |
-| 3 | Hangises | DJ liste (CollectionPage) @graph'ı profil sayfalarına sızıyor (2x BreadcrumbList + 2x FAQPage) | src/app/djs/layout.jsx:137-152 → page.jsx | Açık |
+| 1 | Ankaradj | Sitewide Organization/publisher logosu yanlış markayı (Hangises wordmark, `/logo.png`) gösteriyor; `brand.logoUrl` kullan | src/app/layout.jsx:225 | [Kapandı](https://github.com/ihsanyurekli0-cpu/ankaradjparty-frontend-v2/pull/2) |
+| 2 | Hangises | /equipment görünür H1 + Service şeması ulusal markada 'Ankara' hardcoded (title/meta ile çelişki) | src/app/equipment/page.jsx:262; src/lib/seo/equipment-schema.js:34,36 | [Kapandı](https://github.com/ihsanyurekli0-cpu/ankaradjparty-frontend-v2/pull/2) |
+| 3 | Hangises | DJ liste (CollectionPage) @graph'ı profil sayfalarına sızıyor (2x BreadcrumbList + 2x FAQPage) | src/app/djs/layout.jsx:137-152 → page.jsx | [Kapandı](https://github.com/ihsanyurekli0-cpu/ankaradjparty-frontend-v2/pull/2) |
 
 ## P2
 
 | # | Proje | Aksiyon | Konum | Durum |
 |---|-------|---------|-------|-------|
 | 1 | Ankaradj | Var olmayan DJ profili 404 yerine 200 (noindex) dönüyor — soft-404 + crawl israfı | src/app/djs/[slugOrId]/layout.jsx:87-95 | Açık |
-| 2 | Ankaradj | DJ sitemap `/djs?limit=50` cap + limit-öncesi client-side şehir filtresi (latent kapsama açığı) | src/app/sitemap.xml/route.js:122,127-129 | Açık |
+| 2 | Ankaradj | DJ sitemap `/djs?limit=50` cap + limit-öncesi client-side şehir filtresi (latent kapsama açığı) | src/app/sitemap.xml/route.js:122,127-129 | [Kapandı](https://github.com/ihsanyurekli0-cpu/ankaradjparty-frontend-v2/pull/2) |
 | 3 | Ankaradj | DJ profil meta description'ları anahtar-kelimesiz/şablon (ham bio) | src/app/djs/[slugOrId]/layout.jsx:39-45,100 | Açık |
 | 4 | Ankaradj | Blog meta description'ları >155 karakter (SERP'te kesiliyor) | src/data/blogPosts.js:29,118 | Açık |
 | 5 | Ankaradj | Blog `<title>`'ları >60 karakter; `\| Ankara DJ Party` son eki kesiliyor | src/data/blogPosts.js:28/117/212; src/lib/brand/config.js:104 | Açık |
 | 6 | Ankaradj | Servis landing sayfaları bireysel DJ profillerine iç link vermiyor | src/components/shared/ServiceLandingPage.jsx:306 | Açık |
 | 7 | Ankaradj | Başlık hiyerarşisi atlamaları (H1→H3; DJ profilinde SSR'da H2/H3 yok) | src/app/djs/[slugOrId]/layout.jsx:296-298 (home, /djs, profil) | Açık |
 | 8 | Ankaradj | BlogPosting image + og:image + publisher.logo hepsi `/logo.png` | src/app/blog/[slug]/page.jsx:38,51,54 | Açık |
-| 9 | Ankaradj | DJ profil sayfaları /djs liste şemasını miras alıyor (2x Breadcrumb/FAQ + CollectionPage sızması) | src/app/djs/layout.jsx:137-152; [slugOrId]/layout.jsx:228,238 | Açık |
+| 9 | Ankaradj | DJ profil sayfaları /djs liste şemasını miras alıyor (2x Breadcrumb/FAQ + CollectionPage sızması) | src/app/djs/layout.jsx:137-152; [slugOrId]/layout.jsx:228,238 | [Kapandı](https://github.com/ihsanyurekli0-cpu/ankaradjparty-frontend-v2/pull/2) |
 | 10 | Ankaradj | Servis landing #organization'ı @id'siz ikinci ProfessionalService ile tekrarlıyor | src/components/shared/ServiceLandingPage.jsx:159-184 | Açık |
-| 11 | Ankaradj | DJ Service/Offer'da aggregateRating yok — YALNIZ gerçek görünür puanla eklenmeli | src/app/djs/[slugOrId]/layout.jsx:186-226 | Açık |
+| 11 | Ankaradj | DJ Service/Offer'da aggregateRating yok — YALNIZ gerçek görünür puanla eklenmeli | src/app/djs/[slugOrId]/layout.jsx:186-226 | [Kapandı](https://github.com/ihsanyurekli0-cpu/ankaradjparty-frontend-v2/pull/2) |
 | 12 | Ankaradj | Hash'li immutable statik varlıklar yalnız `max-age=60` ile serve ediliyor | next.config.mjs:77-82 (+ edge/Caddy) | Açık |
-| 13 | Ankaradj | Servis landing jenerik ~460KB OG kullanıyor; markalı OG'ler atıl | src/lib/seo/servicePageMetadata.js:39-43 | Açık |
-| 14 | Ankaradj | Preconnect yanlış origin'e; `api.ankaradjparty.com` (görsel origin'i) preconnect'siz | src/app/layout.jsx:363-366 | Açık |
+| 13 | Ankaradj | Servis landing jenerik ~460KB OG kullanıyor; markalı OG'ler atıl | src/lib/seo/servicePageMetadata.js:39-43 | [Kapandı](https://github.com/ihsanyurekli0-cpu/ankaradjparty-frontend-v2/pull/2) |
+| 14 | Ankaradj | Preconnect yanlış origin'e; `api.ankaradjparty.com` (görsel origin'i) preconnect'siz | src/app/layout.jsx:363-366 | [Kapandı](https://github.com/ihsanyurekli0-cpu/ankaradjparty-frontend-v2/pull/2) |
 | 15 | Ankaradj | Image optimizasyonu kapalı (passthrough loader) — webp/avif + resize yok | src/lib/imageLoader.js:13-23; next.config.mjs:19-23 | Açık |
 | 16 | Ankaradj | COEP credentialless var ama COOP/CORP yok (fiili P3, defense-in-depth) | next.config.mjs:67 | Açık |
-| 17 | Ankaradj | Ana LocalBusiness logosu `/logo.png` (node'lar arası tutarsız) | src/app/layout.jsx:225; ServiceLandingPage.jsx:141,165 | Açık |
+| 17 | Ankaradj | Ana LocalBusiness logosu `/logo.png` (node'lar arası tutarsız) | src/app/layout.jsx:225; ServiceLandingPage.jsx:141,165 | [Kapandı](https://github.com/ihsanyurekli0-cpu/ankaradjparty-frontend-v2/pull/2) |
 | 18 | Ankaradj | Servis provider @id'siz ikinci işletme entity'si yaratıyor | src/components/shared/ServiceLandingPage.jsx:137-158 | Açık |
 | 19 | Ankaradj | sameAs zayıf: yalnız kurucu IG'si; GBP/marka sosyal profili yok | src/app/layout.jsx:192-195,231-238 (NEXT_PUBLIC_SOCIAL_URLS) | Açık |
 | 20 | Ankaradj | İlçe/şehir-hub landing sayfaları yok (areaServed 9 ilçe hedefliyor) | src/app/sitemap.xml/route.js:20-45 (STATIC_ROUTES) | Açık |
 | 21 | Ankaradj | PostalAddress'te postalCode eksik (GBP/NAP tamlığı) | src/app/layout.jsx:253-261; ServiceLandingPage.jsx:143-148 | Açık |
-| 22 | Hangises | DJ profilleri sitemap'te `limit=50` ile sert kesiliyor, sayfalama yok | src/app/sitemap.xml/route.js:122,69-82 | Açık |
+| 22 | Hangises | DJ profilleri sitemap'te `limit=50` ile sert kesiliyor, sayfalama yok | src/app/sitemap.xml/route.js:122,69-82 | [Kapandı](https://github.com/ihsanyurekli0-cpu/ankaradjparty-frontend-v2/pull/2) |
 | 23 | Hangises | Statik lastmod = dosya mtime; her deploy 'şimdi'ye sıfırlanıyor | src/app/sitemap.xml/route.js:54 | Açık |
 | 24 | Hangises | http+www girişte 2 zincirli redirect | Edge (Cloudflare Redirect Rule / Caddy) | Açık |
 | 25 | Hangises | İki meta description SERP sınırını aşıyor (equipment 204, muzisyen-kiralama 187) | src/app/equipment/layout.jsx:17; src/app/muzisyen-kiralama/page.jsx:9 | Açık |
@@ -98,14 +98,14 @@ Hiçbir projede P0 (kritik/engelleyici) bulgu yok.
 
 ## Özet Sayaç
 
-| Proje | Domain | P0 | P1 | P2 | Toplam |
+| Proje | Domain | P0 | P1 (kapandı) | P2 (kapandı) | Toplam |
 |-------|--------|----|----|----|--------|
-| Ankaradj | ankaradjparty.com | 0 | 1 | 21 | 22 |
-| Hangises | hangises.com | 0 | 2 | 16 | 18 |
+| Ankaradj | ankaradjparty.com | 0 | 1 (1) | 21 (6) | 22 |
+| Hangises | hangises.com | 0 | 2 (2) | 16 (1) | 18 |
 | Nextrez | nextrez.com.tr | 0 | 0 | 14 | 14 |
 | BK Organizasyon (Burcuevent) | burcuevent.tr | 0 | 0 | 18 | 18 |
-| **Toplam** | — | **0** | **3** | **69** | **72** |
+| **Toplam** | — | **0** | **3 (3)** | **69 (7)** | **72** |
 
 - **P0:** 0 — hiçbir projede kritik/engelleyici bulgu yok.
-- **P1:** 3 — tümü tek dosya değişimiyle çözülür (2 Hangises + 1 Ankaradj); marka logosu ve DJ liste şeması sızması öncelikli.
-- **P2:** 69 — hijyen/olgunluk/fırsat (meta uzunlukları, JSON-LD entity birleştirme, görsel optimizasyonu, cache, redirect hop'ları, şehir/ilçe hub içeriği).
+- **P1:** 3/3 **KAPANDI** — [PR #2](https://github.com/ihsanyurekli0-cpu/ankaradjparty-frontend-v2/pull/2) (2026-07-05): marka logosu, /equipment Ankara-hardcode, DJ liste şeması sızması.
+- **P2:** 69, 7'si aynı PR'da kapandı (sitemap pagination ×2, aggregateRating, OG swap, preconnect, org-logo tutarlılığı, djs şema sızması-Ankaradj tarafı). Kalan 62 madde açık — hijyen/olgunluk/fırsat (meta uzunlukları, JSON-LD entity birleştirme, görsel optimizasyonu, cache, redirect hop'ları, şehir/ilçe hub içeriği).
