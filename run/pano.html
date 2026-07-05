@@ -75,7 +75,7 @@
   <header>
     <p class="eyebrow">seo-audit-4-projects · wf_ab12bff1</p>
     <h1>SEO Denetim Hattı — Canlı Pano</h1>
-    <p class="sub">4 proje × 5 boyut, adversarial doğrulamalı. Son güncelleme: <code>2026-07-04 22:33 UTC</code></p>
+    <p class="sub">4 proje × 5 boyut, adversarial doğrulamalı. <strong>TAMAMLANDI</strong> — <code>2026-07-05 00:19 UTC</code></p>
   </header>
 
   <div class="tiles" id="tiles"></div>
@@ -92,22 +92,22 @@
 </div>
 <script>
 const STATE = {
-  updated: "22:33 UTC",
-  phase: 1,
+  updated: "00:10 UTC",
+  phase: 4,
   projects: ["Ankaradj","Hangises","Nextrez","Burcuevent"],
   dims: ["indexation","on-page","structured-data","perf-security","local-intl"],
   // matrix[proje][boyut] = {s:'done'|'run'|'wait', f:bulguSayısı}
   matrix: {
     "Ankaradj":   {"indexation":{s:"done",f:2},"on-page":{s:"done",f:6},"structured-data":{s:"done",f:5},"perf-security":{s:"done",f:5},"local-intl":{s:"done",f:5}},
-    "Hangises":   {"indexation":{s:"done",f:3},"on-page":{s:"run"},"structured-data":{s:"run"},"perf-security":{s:"wait"},"local-intl":{s:"wait"}},
-    "Nextrez":    {"indexation":{s:"wait"},"on-page":{s:"wait"},"structured-data":{s:"wait"},"perf-security":{s:"wait"},"local-intl":{s:"wait"}},
-    "Burcuevent": {"indexation":{s:"wait"},"on-page":{s:"wait"},"structured-data":{s:"wait"},"perf-security":{s:"wait"},"local-intl":{s:"wait"}}
+    "Hangises":   {"indexation":{s:"done",f:3},"on-page":{s:"done",f:5},"structured-data":{s:"done",f:6},"perf-security":{s:"done",f:5},"local-intl":{s:"done",f:3}},
+    "Nextrez":    {"indexation":{s:"done",f:2},"on-page":{s:"done",f:5},"structured-data":{s:"done",f:2},"perf-security":{s:"done",f:3},"local-intl":{s:"done",f:3}},
+    "Burcuevent": {"indexation":{s:"done",f:3},"on-page":{s:"done",f:3},"structured-data":{s:"done",f:4},"perf-security":{s:"done",f:5},"local-intl":{s:"done",f:4}}
   },
   phases: [
-    {n:"1 · Audit", d:"20 denetçi — canlı curl + (Ankaradj/Hangises) kod okuma", s:"run"},
-    {n:"2 · Verify", d:"Her bulguya 1 çürütücü agent — canlıda tekrar kontrol, false-positive eler", s:"wait"},
-    {n:"3 · Synthesize", d:"4 yazar — proje başına güncel backlog markdown", s:"wait"},
-    {n:"4 · Consolidate", d:"BACKLOG.md + README yeniden üretimi → Yap-lacak-seo reposuna push", s:"wait"}
+    {n:"1 · Audit", d:"20 denetçi — canlı curl + (Ankaradj/Hangises) kod okuma → 79 ham bulgu", s:"done"},
+    {n:"2 · Verify", d:"79/79 bulgu adversarial doğrulandı — false-positive'ler elendi", s:"done"},
+    {n:"3 · Synthesize", d:"4 proje backlog'u yazıldı: ankaradj (P1×1), hangises (P1×2), nextrez (yalnız P2), burcuevent (yalnız P2)", s:"done"},
+    {n:"4 · Consolidate", d:"BACKLOG.md + README yazıldı → Yap-lacak-seo reposuna push edildi ✓", s:"done"}
   ],
   log: [
     ["22:07","Workflow başladı — 20 denetçi kuyruğa alındı"],
@@ -116,7 +116,23 @@ const STATE = {
     ["22:20","Paralelde: TAVSIYELER.md yazıldı ve Yap-lacak-seo'ya push edildi"],
     ["22:2x","ankaradj: structured-data ✓5 · perf-security ✓5 · local-intl ✓5 → Ankaradj TAMAM (23 ham bulgu)"],
     ["22:31","hangises:indexation ✓ 3 bulgu"],
-    ["22:33","hangises: on-page ▸ + structured-data ▸ çalışıyor · toplam 26 ham bulgu"]
+    ["22:4x","hangises: on-page ✓5 · structured-data ✓6 · perf-security ✓5 · local-intl ✓3 → Hangises TAMAM (22)"],
+    ["22:44","nextrez:indexation ✓ 2 bulgu"],
+    ["22:44","Export: run/OTURUM-KAYDI.md + script + pano repoya push · Faz-2 tetiği kuruldu"],
+    ["22:5x","nextrez: on-page ✓5 · structured-data ✓2 · perf-security ✓3 · local-intl ✓3 → Nextrez TAMAM (15)"],
+    ["22:56","burcuevent: indexation ✓3 · on-page ✓3 · structured-data ▸ · perf-security ▸"],
+    ["23:0x","burcuevent: structured-data ✓4 · perf-security ✓5 · local-intl ✓4 → Burcuevent TAMAM (19)"],
+    ["23:07","FAZ 1 TAMAMLANDI — 20/20 denetçi, 79 ham bulgu"],
+    ["23:09","FAZ 2 başladı — adversarial verify: 9/79 bitti, devam ediyor"],
+    ["23:21","Verify sürüyor: 23/79 bitti (2 aktif) — eleme oranı henüz netleşmedi"],
+    ["23:33","Verify sürüyor: 40/79 bitti (yarı yolu geçti, 2 aktif)"],
+    ["23:45","Verify sürüyor: 56/79 bitti — son turda, yakında Synthesize başlayacak"],
+    ["23:57","Verify bitmek üzere: 72/79 bitti (1 aktif) — Synthesize an meselesi"],
+    ["00:07","FAZ 2 TAMAMLANDI — 79/79 bulgu doğrulandı"],
+    ["00:09","FAZ 3 TAMAMLANDI — 4 proje backlog'u yazıldı (ankaradj/hangises/nextrez/burcuevent)"],
+    ["00:10","FAZ 4 başladı — Consolidate agent BACKLOG.md + README üretiyor"],
+    ["00:13","FAZ 4 TAMAMLANDI — 79 ham bulgudan 75'i doğrulandı (4 elendi): P0=0, P1=3, P2=72"],
+    ["00:19","Backlog Yap-lacak-seo'ya push edildi · Faz-2 tetiği (v2, gerçek P1'lerle) kuruldu ve ateşleniyor"]
   ]
 };
 
